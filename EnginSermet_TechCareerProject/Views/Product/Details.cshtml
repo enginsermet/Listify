@@ -1,0 +1,80 @@
+﻿@model EnginSermet_TechCareerProject.Entities.Product
+
+@{
+    ViewData["Title"] = "Details";
+
+    var routeValues = new RouteValueDictionary();
+    routeValues.Add("productId", Model?.ProductId);
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CategoryId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UnitPrice)
+        </dd>
+    </dl>
+</div>
+
+<div>
+
+    @using (Html.BeginForm("AddProduct", "List", routeValues, FormMethod.Post))
+    {
+        <label for="quantity" class="a-native-dropdown">Quantity :</label>
+        <select name="quantity" autocomplete="off" id="quantity" style="padding: 2px 4px;">
+            <option value="1" selected="">1 </option>
+            <option value="2">2 </option>
+            <option value="3">3 </option>
+            <option value="4">4 </option>
+            <option value="5">5 </option>
+        </select>
+
+        <br /><br />
+       <textarea class="form-control" id="Description" name="Description" rows="2" cols="10" placeholder="Add note..."></textarea>
+       <br />
+        <select id="listSelector" name="ListSelector" asp-items="ViewBag.List">
+            <option>Select List</option>
+        </select>
+        <input type="submit" value="Add" />
+    }
+    <br />
+    <a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<style>
+    #listSelector{
+        border: 1px solid;
+        border-color: #adb1b8 #a2a6ac #8d9096;
+        box-shadow: 0 1px 0 rgb(255 255 255 / 60%) inset;
+        background: linear-gradient(to bottom,#f7f8fa,#e7e9ec);
+        border-radius: 3px 0 0 3px;
+        padding: 1px 6px;
+        cursor: pointer;
+    }
+
+</style>

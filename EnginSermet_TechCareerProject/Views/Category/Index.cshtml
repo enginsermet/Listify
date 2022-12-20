@@ -1,0 +1,59 @@
+﻿@model IEnumerable<EnginSermet_TechCareerProject.Entities.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Categories</h1>
+
+<p>
+    <a asp-action="Add">Add New</a>
+</p>
+
+@foreach (var item in Model)
+{
+    var base64 = Convert.ToBase64String(item.Picture);
+    var imgsrc = String.Format("data:image/gif;base64,{0}", base64);
+    <div class="responsive">
+        <div class="gallery">
+            <a asp-controller="Category" asp-action="CategoryProduct" asp-route-id="@item.CategoryId">
+                <img src="@imgsrc" width="600" height="400">
+            </a>
+            <div class="desc">@Html.DisplayFor(modelItem => item.CategoryName)</div>
+        </div>
+    </div>
+
+}
+
+
+
+
+<style>
+            div.gallery {
+          border: 1px solid #ccc;
+        }
+
+        div.gallery:hover {
+          border: 1px solid #777;
+        }
+
+        div.gallery img {
+          width: 100%;
+          height: auto;
+        }
+
+        div.desc {
+          padding: 15px;
+          text-align: center;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        .responsive {
+          padding: 0 6px;
+          float: left;
+          width: 24.99999%;
+        }
+</style>

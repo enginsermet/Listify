@@ -1,0 +1,41 @@
+﻿@model IEnumerable<EnginSermet_TechCareerProject.Entities.List>
+
+@{
+    ViewData["Title"] = "My Lists";
+}
+
+<h1>My Lists</h1>
+
+<p>
+    <a asp-action="Add">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ListName)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ListName)
+                </td>
+                <td>
+                    <a asp-action="ListDetails" asp-route-id="@item.ListId">View</a> |
+                    <a asp-action="Details" asp-route-id="@item.ListId">Details</a> 
+                </td>
+                <td style="text-align:center;">
+                    <a asp-action="Shopping" asp-route-id="@item.ListId">
+                    <button type="button" class="btn btn-success">Go Shopping</button>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

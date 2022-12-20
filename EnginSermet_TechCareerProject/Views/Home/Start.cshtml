@@ -1,0 +1,120 @@
+﻿@using EnginSermet_TechCareerProject.Configurations
+@using EnginSermet_TechCareerProject.DTOs
+@using EnginSermet_TechCareerProject.Entities
+
+@model IEnumerable<CategoryProductDTO>
+
+
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+@{
+    CategoryComparer categoryComparer = new CategoryComparer();
+
+    IEnumerable<CategoryDTO> Categories = Model.Select(a => new CategoryDTO { CategoryId = a.CategoryId, CategoryName = a.CategoryName }).Distinct(categoryComparer);
+}
+<div style="display:flex">
+    <div class="col-3">
+        <div>
+            <ul class="catMenu">
+                @foreach (var category in Categories)
+                {
+                    <a class="catMenu-item" asp-controller="Category" asp-action="CategoryProduct" asp-route-id="@category.CategoryId">
+                    <li>@category.CategoryName</li>
+                    </a>
+                }
+                <a class="catMenu-item" asp-controller="Category" asp-action="Index" asp-route-id="">
+                <li>All Categories</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div class="col-9">
+        @foreach (var product in Model)
+        {
+
+            var base64 = Convert.ToBase64String(product.Picture);
+            var imgsrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+            <div class="responsive">
+                <div class="gallery">
+                    <a asp-controller="Category" asp-action="ListProductAdd" asp-route-id="@product.ProductId">
+                        <img src="@imgsrc" width="600" height="400">
+                    </a>
+                    <div class="desc">@Html.DisplayFor(modelItem => product.ProductName)</div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+
+    .catMenu {
+        text-decoration: none;
+        padding-right: 2rem;
+    }
+
+        .catMenu li {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .catMenu li:after {
+                content: "\f105";
+                font-family: 'FontAwesome';
+                font-weight: 600;
+            }
+
+    .catMenu-item {
+        text-decoration: none;
+        padding-right: 25px;
+        padding-left: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+
+    .fa-regular {
+        font-style: normal;
+    }
+
+    .fa-angle-right:before {
+        content: "\f105";
+        font-family: 'FontAwesome';
+        font-weight: 600;
+    }
+
+    div.gallery {
+        border: 1px solid #ccc;
+    }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: auto;
+        }
+
+    div.desc {
+        padding: 4px;
+        text-align: center;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .responsive {
+        padding: 0 6px;
+        float: left;
+        width: 24.99999%;
+    }
+
+</style>

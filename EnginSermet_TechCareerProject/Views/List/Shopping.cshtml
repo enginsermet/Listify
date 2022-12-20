@@ -1,0 +1,116 @@
+﻿@using EnginSermet_TechCareerProject.DTOs
+@using EnginSermet_TechCareerProject.Entities
+
+@model List<ListProductDTO>
+
+@{
+    ViewData["Title"] = "Shopping";
+}
+
+<h1>Shop</h1>
+
+<table id="products" class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var routeValues = new RouteValueDictionary();
+            routeValues.Add("productId", item.ProductId);
+
+            if (item.isPurchased == true)
+            {
+                <tr id="product">
+                    <td class="selected">
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td class="selected">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td class="selected">
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td class="selected">
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td id="optionsCol" class="selected">
+                    </td>
+
+                    <td class="checkbox">
+                        <form class="saveChanges" method="post" asp-action="UndoPurchase" asp-route-productId="@item.ProductId">
+                            <input class="form-check-input" type="checkbox" value="@item.isPurchased" onclick="isPurchased(this);" onchange="isSaved(this);" checked>
+                        </form>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr id="product">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                    </td>
+
+                    <td class="checkbox">
+                        <form class="saveChanges" method="post" asp-action="PurchaseProduct" asp-route-productId="@item.ProductId">
+                            <input class="form-check-input" type="checkbox" value="@item.isPurchased" onclick="isPurchased(this);" onchange="isSaved(this);">
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<style>
+    table {
+        border-collapse: collapse;
+        empty-cells: show;
+    }
+
+    td {
+        position: relative;
+    }
+
+    .selected:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        border-bottom: 1px solid #111;
+        width: 100%;
+    }
+
+    .checkbox:before {
+        display: none;
+    }
+
+</style>
+
+<script>
+
+    function isPurchased(x) {
+        var row = $(x).closest('tr');
+        if (!(row).find('td').hasClass('selected')) {
+            (row).find('td').addClass('selected');
+        }
+        else {
+            (row).find('td').removeClass("selected");
+        }
+    }
+
+    function isSaved(x) {
+        debugger;
+        var form = $(x).closest('.saveChanges');
+        form.submit();
+    }
+
+</script>

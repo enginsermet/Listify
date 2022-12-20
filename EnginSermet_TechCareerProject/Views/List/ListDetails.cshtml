@@ -1,0 +1,65 @@
+﻿@using EnginSermet_TechCareerProject.DTOs
+@using EnginSermet_TechCareerProject.Entities
+
+@model List<ListProductDTO>
+
+@{
+    ViewData["Title"] = ViewBag.ListName;
+
+}
+
+<h1>@ViewBag.ListName</h1>
+
+<p>
+    <a asp-controller="Category" asp-action="Index">Add Product</a>
+</p>
+<table id="products" class="table">
+        <thead>
+    <tr>
+    <th>
+    @Html.DisplayName("Product Name")
+    </th>
+    <th>
+    @Html.DisplayName("Unit Price")
+    </th>
+    <th>
+    @Html.DisplayName("Quantity")
+    </th>
+    <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var routeValues = new RouteValueDictionary();
+            routeValues.Add("productId", item.ProductId);
+
+            <tr id="product">
+                <td id="productCol">
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td id="priceCol">
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td id="quantityCol">
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td id="optionsCol">
+                    <a asp-action="PurchaseProduct" asp-route-id="@item.ProductId">Edit</a> |
+                    <a asp-action="ListProductDetails" asp-route-id="@item.ProductId" asp-route-listId="@ViewBag.ListId">Details</a> |
+                    <form method="post" class="deleteForm" asp-action="ListProductDelete" asp-controller="List" asp-route-id="@item.ProductId" asp-route-listId="@ViewBag.ListId" style="display:inline;">
+                        <a onclick="submitForm(this)" style="cursor:pointer; text-decoration:underline;">Delete</a>
+                    </form>              
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function submitForm(x)
+    {
+        var form = $(x).closest('.deleteForm');
+        form.submit();
+    }
+</script>

@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="home">
+    <h1 class="display-4" style="color: bisque;">Welcome to Listify</h1>
+    <p style="color: bisque; font-size: large;">Start creating lists and make your market shopping easier</a></p>
+    <div>
+        <a asp-action="GetStarted">
+        <button class="startBtn">Get Started</button>
+        </a>
+    </div>
+</div>
+
+
+
+
+<style>
+    body{
+        background-image: url('background.png') !important;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-blend-mode: difference;
+        background-position-y: -5vw;
+    }
+    .home {
+        margin-top: 14vw;
+        text-align: right;
+    }
+
+    .startBtn
+    {
+        background-color: teal;
+        color: #ffffff;
+        border: none;
+        border-radius: 10rem;
+        padding: 8px 30px;
+        font-size: xx-large;
+    }
+</style>

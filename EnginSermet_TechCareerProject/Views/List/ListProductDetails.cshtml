@@ -1,0 +1,75 @@
+﻿@model EnginSermet_TechCareerProject.Entities.ListDetail
+
+@{
+    ViewData["Title"] = ViewBag.ProductName;
+
+    var routeValues = new RouteValueDictionary();
+    routeValues.Add("productId", Model?.ProductId);
+
+    string unitPrice = ViewBag.UnitPrice.ToString("0.00");
+
+    var base64 = Convert.ToBase64String(ViewBag.Picture);
+    var imgsrc = String.Format("data:image/gif;base64,{0}", base64);
+}
+
+
+    <h1>@ViewBag.ProductName</h1>
+    <hr />
+    <div style="display: flex;">
+    <div class="col-6">
+    <img src="@imgsrc" width="600" height="600">
+    </div>
+    <div class="col-6">
+        <dl class="row" style="margin-bottom: 2.5rem; margin-top: 5rem;">
+        <dt>
+            @Html.LabelFor(model => model.Product.UnitPrice, "Price : ")
+            <label id="unitPrice">@unitPrice</label>
+        </dt>
+    </dl>
+
+<div>
+
+    <form method="post" asp-action="ListProductUpdate">
+        <input type="hidden" asp-for="ListId" value="@Model.ListId" />
+        <input type="hidden" asp-for="ProductId" value="@Model.ProductId" />
+
+                <label asp-for="Quantity" for="quantity" class="a-native-dropdown" style="margin-bottom: 2.5rem;">Quantity :</label>
+        <select asp-for="Quantity" name="quantity" autocomplete="off" id="quantity" style="padding: 2px 4px;">
+            <option value="1" selected="">1 </option>
+            <option value="2">2 </option>
+            <option value="3">3 </option>
+            <option value="4">4 </option>
+            <option value="5">5 </option>
+        </select>
+        <br /><br />
+        <textarea asp-for="Description" class="form-control" id="Description" name="Description" rows="2" cols="10" placeholder="Add note...">@Model.Description</textarea>
+        <br />
+        <input type="submit" value="Save" />
+    </form>
+    <br />
+    <form method="post" class="navForm" asp-action="ListDetails" asp-route-id="@Model.ListId" style="display:inline;">
+        <a onclick="submitForm(this)" style="cursor:pointer; text-decoration:underline;">Back to List</a>
+    </form>
+</div>
+</div>
+</div>
+<style>
+    #listSelector {
+        border: 1px solid;
+        border-color: #adb1b8 #a2a6ac #8d9096;
+        box-shadow: 0 1px 0 rgb(255 255 255 / 60%) inset;
+        background: linear-gradient(to bottom,#f7f8fa,#e7e9ec);
+        border-radius: 3px 0 0 3px;
+        padding: 1px 6px;
+        cursor: pointer;
+    }
+
+</style>
+
+
+<script>
+    function submitForm(x) {
+        var form = $(x).closest('.navForm');
+        form.submit();
+    }
+</script>
