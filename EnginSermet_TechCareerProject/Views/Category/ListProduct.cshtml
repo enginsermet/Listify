@@ -5,63 +5,66 @@
 
     var routeValues = new RouteValueDictionary();
     routeValues.Add("productId", Model?.ProductId);
+    var base64 = Convert.ToBase64String(ViewBag.Picture);
+    var imgsrc = String.Format("data:image/gif;base64,{0}", base64);
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Category.CategoryName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UnitPrice)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UnitPrice)
-        </dd>
-    </dl>
+<h1>@ViewBag.ProductName</h1>
+<hr />
+
+
+<div style="display: flex;">
+    <div class="col-6">
+        <img src="@imgsrc" width="600" height="600">
+    </div>
+    <div class="col-6" style="margin-top: 5rem;">
+        <div>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Category)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Category.CategoryName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UnitPrice)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UnitPrice)
+                </dd>
+            </dl>
+        </div>
+
+        <div>
+
+            @using (Html.BeginForm("AddProduct", "List", routeValues, FormMethod.Post))
+            {
+                <label for="quantity" class="a-native-dropdown">Quantity :</label>
+                <select name="quantity" autocomplete="off" id="quantity" style="padding: 2px 4px;">
+                    <option value="1" selected="">1 </option>
+                    <option value="2">2 </option>
+                    <option value="3">3 </option>
+                    <option value="4">4 </option>
+                    <option value="5">5 </option>
+                </select>
+
+                <br />
+
+                <br />
+                <textarea class="form-control" id="Description" name="Description" rows="2" cols="10" placeholder="Add note..."></textarea>
+                <br />
+                <select id="listSelector" name="ListSelector" asp-items="ViewBag.List">
+                    <option>Select List</option>
+                </select>
+                <input type="submit" value="Add" />
+            }
+            <br />
+            <a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
 </div>
-
-<div>
-
-    @using (Html.BeginForm("AddProduct", "List", routeValues, FormMethod.Post))
-    {
-        <label for="quantity" class="a-native-dropdown">Quantity :</label>
-        <select name="quantity" autocomplete="off" id="quantity" style="padding: 2px 4px;">
-            <option value="1" selected="">1 </option>
-            <option value="2">2 </option>
-            <option value="3">3 </option>
-            <option value="4">4 </option>
-            <option value="5">5 </option>
-        </select>
-
-        <br />
-
-        <br />
-        <textarea class="form-control" id="Description" name="Description" rows="2" cols="10" placeholder="Add note..."></textarea>
-        <br />
-        <select id="listSelector" name="ListSelector" asp-items="ViewBag.List">
-            <option>Select List</option>
-        </select>
-        <input type="submit" value="Add" />
-    }
-    <br />
-    <a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
-
 <style>
     #listSelector {
         border: 1px solid;

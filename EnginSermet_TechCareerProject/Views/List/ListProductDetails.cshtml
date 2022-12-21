@@ -15,12 +15,15 @@
 
     <h1>@ViewBag.ProductName</h1>
     <hr />
+
+<a class="cat-nav" asp-controller="Category" asp-action="Index">All</a> <span class="angle"></span> <a class="cat-nav" asp-controller="Category" asp-action="CategoryProduct" asp-route-id="@ViewBag.CategoryId"> @ViewBag.Category</a>
+
     <div style="display: flex;">
     <div class="col-6">
     <img src="@imgsrc" width="600" height="600">
     </div>
-    <div class="col-6">
-        <dl class="row" style="margin-bottom: 2.5rem; margin-top: 5rem;">
+    <div class="col-6" style="margin-top: 5rem;">
+        <dl class="row">
         <dt>
             @Html.LabelFor(model => model.Product.UnitPrice, "Price : ")
             <label id="unitPrice">@unitPrice</label>
@@ -33,7 +36,7 @@
         <input type="hidden" asp-for="ListId" value="@Model.ListId" />
         <input type="hidden" asp-for="ProductId" value="@Model.ProductId" />
 
-                <label asp-for="Quantity" for="quantity" class="a-native-dropdown" style="margin-bottom: 2.5rem;">Quantity :</label>
+                <label asp-for="Quantity" for="quantity" class="a-native-dropdown">Quantity :</label>
         <select asp-for="Quantity" name="quantity" autocomplete="off" id="quantity" style="padding: 2px 4px;">
             <option value="1" selected="">1 </option>
             <option value="2">2 </option>
@@ -54,6 +57,18 @@
 </div>
 </div>
 <style>
+    .cat-nav {
+        text-decoration: none;
+        color: #4e4e4e;
+        font-size: 14px;
+    }
+    .angle:before {
+        content: "\f105";
+        font-family: 'FontAwesome';
+        font-weight: 600;
+        color: #4e4e4e;
+    }
+
     #listSelector {
         border: 1px solid;
         border-color: #adb1b8 #a2a6ac #8d9096;

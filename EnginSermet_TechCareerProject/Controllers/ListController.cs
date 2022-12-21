@@ -235,7 +235,11 @@ namespace EnginSermet_TechCareerProject.Controllers
 
             var product = await Context.Products.SingleOrDefaultAsync(p => p.ProductId == id);
 
+            product.Category = new DataContext().Categories.Find(product.CategoryId);
+
             ViewBag.ProductName = product.ProductName;
+            ViewBag.CategoryId = product.CategoryId;
+            ViewBag.Category = product.Category.CategoryName;
             ViewBag.UnitPrice = product.UnitPrice;
             ViewBag.Picture = product.Picture;
 

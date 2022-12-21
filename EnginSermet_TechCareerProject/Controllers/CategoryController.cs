@@ -41,6 +41,10 @@ namespace EnginSermet_TechCareerProject.Controllers
 
             var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
+
+            ViewBag.CategoryName = category.CategoryName;
+            ViewBag.Picture = category.Picture;
+
             if (category == null)
             {
                 return NotFound();
@@ -57,7 +61,7 @@ namespace EnginSermet_TechCareerProject.Controllers
         }
 
         // POST: Category/Add
-        [Authorize]
+        [Authorize()]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(CategoryDTO categoryDTO)
@@ -248,6 +252,9 @@ namespace EnginSermet_TechCareerProject.Controllers
 
             var product = await _context.Products
                 .FirstOrDefaultAsync(m => m.ProductId == id);
+
+            ViewBag.ProductName = product.ProductName;
+            ViewBag.Picture = product.Picture;
 
             product.Category = new DataContext().Categories.Find(product.CategoryId);
 

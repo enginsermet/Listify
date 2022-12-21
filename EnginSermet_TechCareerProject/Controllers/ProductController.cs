@@ -96,8 +96,6 @@ namespace EnginSermet_TechCareerProject.Controllers
         public async Task<IActionResult> Add( ProductDTO productDTO, int CategorySelector)
         {
 
-            if (ModelState.IsValid)
-            {
                 using (var memoryStream = new MemoryStream())
                 {
                     await productDTO.Picture.CopyToAsync(memoryStream);
@@ -107,15 +105,12 @@ namespace EnginSermet_TechCareerProject.Controllers
                     product.CategoryId = CategorySelector;
                     product.Picture = memoryStream.ToArray();
 
-
-                    product.Category = new DataContext().Categories.Find(CategorySelector);
                     _context.Add(product);
                     await _context.SaveChangesAsync();
                 }
-            }
                
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Category");
 
             return View(productDTO);
         }
