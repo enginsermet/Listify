@@ -174,13 +174,13 @@ namespace EnginSermet_TechCareerProject.Controllers
 
 
         [HttpPost]
-        public IActionResult AddProduct(int productId, int ListSelector)
+        public IActionResult AddProduct(int productId, int ListSelector, string Description)
         {
             ListDetail listDetail = new ListDetail();
             listDetail.ListId = ListSelector;
             listDetail.ProductId = productId;
             listDetail.Quantity = 1;
-            listDetail.Description = "";
+            listDetail.Description = Description;
             listDetail.isPurchased = false;
             _context.ListDetails.Add(listDetail);
             _context.SaveChanges();
